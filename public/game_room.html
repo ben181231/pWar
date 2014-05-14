@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Room</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/game_room.css">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="js/socket.io.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/game_room.js"></script>
+</head>
+<body clss="wbody">
+    <div id="outerFrame" class="hide">
+        <div class="frame redFrame hide" id="user-0" data-userID='0'>
+            <div class="name">{{UserName}}</div>
+            <div class="readyTag">READY</div>
+            <div class="readyTips">Click here when you are READY</div>
+        </div>
+        <div class="frame greenFrame hide" id="user-1" data-userID='1'>
+            <div class="name">{{UserName}}</div>
+            <div class="readyTag">READY</div>
+            <div class="readyTips">Click here when you are READY</div>
+        </div>
+        <div class="frame blueFrame hide" id="user-2" data-userID='2'>
+            <div class="name">{{UserName}}</div>
+            <div class="readyTag">READY</div>
+            <div class="readyTips">Click here when you are READY</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 col-xs-offset-4 hide" id="StartBtn">
+                Start Game
+            </div>
+        </div>
+    </div>
+    <div id="waitingFrame">
+        <img src="img/loading.gif" alt="Loading" />
+    </div>
+</body>
+</html>

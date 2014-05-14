@@ -1,0 +1,140 @@
+html, body{
+    height: 100%;
+}
+body{
+    font-family: "Helvetica" sans-serif;
+    background-image: url(../img/bg-canvas.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+body.wBody{
+    background-size: 100% auto;
+}
+body.hBody{
+    background-size: auto 100%;
+}
+
+div{
+    cursor: default;
+}
+
+.frame{
+    border: 1px solid black;
+    display: inline-block;
+    position: relative;
+    margin: 10px 30px;
+    width: 250px;
+    height: 250px;
+    border-radius: 100%;
+}
+
+.frame > .name{
+    margin-top: 43%;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.frame > .readyTag{
+    position: absolute;
+    padding: 5px 30px;
+    text-align: center;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none;
+}
+
+.frame.ready > .readyTag{
+    display: block;
+}
+
+
+.frame > .readyTips{
+    display: block;
+    position: relative;
+    width: 240px;
+    text-align: center;
+    opacity: 0;
+}
+
+.frame.readyFrame > .readyTips{
+    opacity: 1;
+}
+
+.frame.readyFrame.ready > .readyTips{
+    opacity: 0;
+}
+
+.redFrame{ 
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 5px solid rgb(255, 102, 102);
+    color: #ccc;
+}
+
+.redFrame.ready{
+    background-color: rgba(255, 102, 102, 0.4);
+}
+
+.greenFrame{ 
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 5px solid rgb(17, 255, 153);
+    color: #ccc;
+}
+
+.greenFrame.ready{
+    background-color: rgba(17, 255, 153, 0.4);
+}
+
+.blueFrame{
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 5px solid rgb(119, 119, 255);
+    color: #ccc;
+}
+
+.blueFrame.ready{
+    background-color: rgba(119, 119, 255, 0.4);
+}
+
+.readyFrame, .readyFrame > div{ cursor: pointer; }
+
+.hide{ display: none; }
+
+#outerFrame{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -125px;
+    margin-left: -469px;
+    width: 938px;
+}
+
+#StartBtn{
+    text-align: center;
+    font-size: 24px;
+    color: #81ccff;
+    margin-top: 20px;
+    padding: 10px;
+    border: 5px solid #ccc;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+#StartBtn:hover{
+    background-color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+}
+
+#waitingFrame{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    opacity: 0.7;
+}
+
+#waitingFrame > img{
+    width: 100px;
+    height: 100px;
+}

@@ -1,0 +1,27 @@
+{
+  "name": "pWar",
+  "version": "0.0.0",
+  "description": "CSCI4140 Project (Group 1): Peanut War",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "Peanut",
+    "War",
+    "CSCI4140",
+    "4140"
+  ],
+  "author": "Ken Lau",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "cookie-parser": "~1.0.1",
+    "express": "~4.1.1",
+    "connect": "~2.15.0",
+    "socket.io": "~0.9.16",
+    "sha1": "~1.1.0",
+    "mongodb": "~1.4.3",
+	"nodemon": ""
+  }
+}

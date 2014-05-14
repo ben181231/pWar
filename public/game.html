@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Peanut War</title>
+    <!--<script src="http://code.createjs.com/easeljs-0.7.0.min.js"></script>
+    <script src="http://code.createjs.com/soundjs-0.5.2.min.js"></script>-->
+    <script src="js/createjs-full.js"></script>
+
+    <link rel="stylesheet" href="css/game.css">
+
+    <script src="js/socket.io.min.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/game-renderState.js"></script>
+    <script src="js/game-renderResource.js"></script>
+    <script src="js/game-renderUtil.js"></script>
+    <script src="js/game-renderEvent.js"></script>
+    <script src="js/game-render.js"></script>
+    <script src="js/game-logic.js"></script>
+    <script src="js/game-sound.js"></script>
+    <script src="js/game-socket.js"></script>
+    
+</head>
+<body onload="init()">
+    <table width="800px" align="center">
+        <tr>
+            <td><p id="fleet" style="font-family:arial;color:#ccc;font-size:14px;" align="left" class="disable-select">Fleet Percentage: 50% &nbsp&nbsp&nbsp&nbsp [Q] -10% &nbsp [W] +10%</p></td>
+            <td><p id="time" style="font-family:arial;color:#ccc;font-size:14px;" align="right" class="disable-select">Please wait for game start</p></td>
+        </tr>
+    </table>
+
+    
+    <canvas id="gameCanvas" width="870" height="600">
+        Game Canvas
+    </canvas>
+</body>
+
+<script type="text/javascript">
+    var fixResize = function(){
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        var body = document.getElementsByTagName('body')[0];
+
+        if(w * 1.0 / h > 16.0 / 10){
+            body.classList.remove('hBody');
+            body.classList.add('wBody');
+        }else{
+            body.classList.remove('wBody');
+            body.classList.add('hBody');
+        }
+    };
+    fixResize();
+
+    window.onresize = fixResize;
+
+    window.onkeydown=function(){
+        var key_press = String.fromCharCode(event.keyCode);
+        console.log(key_press);
+        if ((key_press == "Q")&&(Game.players[Game.myPlayerId].percentage > 1)) {
+            console.log("Q");
+            Game.players[Game.myPlayerId].percentage -= 1;
+        }   
+        if ((key_press == "W")&&(Game.players[Game.myPlayerId].percentage < 9)) {
+            console.log("W");
+            Game.players[Game.myPlayerId].percentage += 1;
+        }
+        document.getElementById('fleet').innerHTML = "Fleet Percentage: "+(Game.players[Game.myPlayerId].percentage*10)+"% &nbsp&nbsp&nbsp&nbsp [Q] -10% &nbsp [W] +10%";
+    }     
+</script>
+</html>

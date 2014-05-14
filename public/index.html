@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Peanut War</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <style>
+        html, body{
+            height: 100%;
+        }
+        body{
+            background-image: url(/img/bg.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        body.wBody{
+            background-size: 100% auto;
+        }
+        body.hBody{
+            background-size: auto 100%;
+        }
+        #mainDiv{
+            background-color: rgba(122,122,122,0.5);
+            position: absolute;
+            top:50%;
+            left: 0;
+            right: 0;
+        }
+
+		div #div_login{
+			display: none;
+		}
+
+		#option_button {
+			display: inline;
+			text-align: center;
+		}
+
+		#submit_button {
+			display: inline;
+			text-align: center;
+		}
+    </style>
+</head>
+<body>
+    <div class="jumbotron text-center" id="mainDiv">
+        <h1>Peanut War</h1>
+        <p>A real-time strategy game</p>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <!-- Login Form -->
+            </div>
+        </div>
+        <p id="enter_msg"><a class="btn btn-primary btn-lg" role="button">Enter</a></p>
+		
+		<!-- log in form and reg form, the action is depend on the "action" 
+			 by default it is a log in form -->
+		<div id="div_login">
+			<p id="form_title">Login</p>
+			<form action="login" method="POST" id="login_form">
+				<div id="input_name">
+					User name: <input type="text" name="username" required autofocus /> <br /> <br />
+				<div>
+				<div id="input_passwd">
+					Password&nbsp; : <input type="password" name="passwd" required /> <br /> <br />
+				</div>
+				<div id="confirm_passwd" style="display: none;" > </div>
+				<input id="submit_button" type="submit" class="btn btn-primary btn-lg" value="Log in"/>
+        		<a id="option_button" class="btn btn-primary btn-lg" role="button">Register</a>
+			</form>
+		</div>
+    </div>
+</body>
+<script>
+	var input_tag = 'Confirm &nbsp; &nbsp;: <input type="password" name="confirm_passwd" required /> <br /> <br />';
+    $(document).ready(function() {
+        var fixResize = function(){
+            var w = $('body').width();
+            var h = $('body').height();
+
+            if(w * 1.0 / h > 16.0 / 9){
+                $('body').removeClass('hBody').addClass('wBody');
+            }else{
+                $('body').removeClass('wBody').addClass('hBody');
+            }
+
+            var mh = $('#mainDiv').outerHeight();
+            $('#mainDiv').css('margin-top', -(mh / 2));
+        };
+        fixResize();
+
+        $(window).resize(fixResize);
+    
+		// sliding effect of login
+		$("#enter_msg").on("click", function(e){
+			$("#div_login").slideDown("slow", function(){
+                fixResize();
+            });
+			$(this).hide();
+		});
+
+		// action when user register / go back
+		$("#option_button").on("click", function(e){
+			// hide the input first
+			$("#div_login").slideUp("slow", function(){
+				// change the submit location
+				var sub_button = document.querySelector("#submit_button");
+				var opt_button = document.querySelector("#option_button");
+				// change the form type and the button type
+				// using jquery, sicne if use JS, the action will return http://xyz/<action>
+				// instead of jquery, the action name
+				if($("#login_form").attr("action") == "login")	// change to register
+				{
+					$("#form_title").html("Register");
+					$("#confirm_passwd").css("display", "block");
+					// set the content
+					$("#confirm_passwd").html(input_tag);
+					// set the confirm passwd should be required
+					$("#login_form").attr("action", "register");
+					sub_button.value = "Register"
+					opt_button.innerHTML = "Back";
+				}
+				else	// change to login
+				{
+					$("#form_title").html("Log in");
+					$("#confirm_passwd").css("display", "none");
+					// unset the content
+					$("#confirm_passwd").html("");
+					$("#login_form").attr("action", "login");
+					sub_button.value = "Log in"
+					opt_button.innerHTML = "Register";
+				}
+
+				// display again now
+				$("#div_login").slideDown("slow");
+			});
+		});
+
+		// when the login button is click, should submit the data to server through AJAX
+		$("#login_form").on("submit", send_data);
+	});
+
+	// using AJAX to submit the login or registation request
+	function send_data(e)
+	{
+		e.preventDefault();
+		var name = document.querySelector("#input_name input").value;
+		var passwd = document.querySelector("#input_passwd input").value;
+		var confirm_passwd;
+		// since the login_form, the confimr passwd is display: none, so cannot get it
+		// hence need to check what condition
+		if($("#login_form").attr("action") == "login")
+			confirm_passwd = null;
+		else
+		{
+			confirm_passwd = document.querySelector("#confirm_passwd input").value;
+			if(confirm_passwd != passwd)
+			{
+				alert("The confirm password is not match the original one -v-");
+				return ;
+			}
+		}
+
+		// var name = document.getElementsByTagName("input")[0].value;
+		// var passwd = document.getElementsByTagName("input")[1].value;
+		var req_type = $("#login_form").attr("action");
+
+		var ajax_request = $.ajax({
+			type: "POST",
+			url: "/" + req_type,
+			aysnc: true,
+			dataType: "json",
+			data: {username: name, passwd: passwd, confirm: confirm_passwd}
+		});
+		
+		// server respond
+		ajax_request.done(function(data){
+			// the respond JSON will be in this form
+			// {status: <0 or 1 or 2>, msg: <reason>}
+			
+			// check if the tag exist, not exist, create it
+			if(!$("#status_msg").length)
+			{
+				$("#login_form").before("<h3 id='status_msg'></h3>");
+				console.log("can append: " + $("#login_form"));
+			}
+
+			console.log("status " + data.status + " reason: " + data.reason);
+			$("#status_msg").html(data.reason);
+			switch(data.status)
+			{
+				case 0:
+					// request new page now
+					window.location = "/game_hall.html";
+					break;
+				default:
+					break;
+			}
+		});
+
+		// in case it fails
+		ajax_request.fail(function(jqXHR, textStatus){
+			console.log("failed in ajax: " + JSON.stringify(jqXHR) + " | " + textStatus);
+		});
+
+	}
+</script>
+</html>
+
+
+
