@@ -4,5 +4,5 @@ module.exports = {
     db_port: 27017,         /* Default port for MongoDB */ 
     db_name: "pwar",
     db_userName: "foo",
-    db_passworkd: "bar"
+    db_password: "bar"
 };
