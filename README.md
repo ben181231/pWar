@@ -9,3 +9,6 @@ Installation
 2. install all required modules 'sudo npm install'
 3. launch server by 'node server.js'
 
+You need Nodejs and Mongodb to host the server of the game.  Make sure your config.js file matches with your Mongodb configuration, especially database and user.
+
+Have Fun on Peanut War !
