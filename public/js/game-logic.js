@@ -235,8 +235,8 @@ function abilities(pid, Aid, target_planet) {
 			document.getElementById("gameCanvas").style.border = "3px solid #F00";
 		}
 
-		Game.players[pid].abilities_info[3].effecting = 10;
-		Game.players[pid].abilities_info[3].waiting = 60;
+		Game.players[pid].abilities_info[3].effecting = 5;
+		Game.players[pid].abilities_info[3].waiting = 50;
 		setTimeout(function(){
 		    document.getElementById("gameCanvas").style.border = "3px solid #999";
 		}, 10000);
@@ -323,7 +323,7 @@ function time_checker() {
         var regenerate_width = Game.players[Game.myPlayerId].abilities_info[0].waiting/40;
         var electric_width = Game.players[Game.myPlayerId].abilities_info[1].waiting/30;
         var assassin_width = Game.players[Game.myPlayerId].abilities_info[2].waiting/25;
-        var rampage_width = Game.players[Game.myPlayerId].abilities_info[3].waiting/60;
+        var rampage_width = Game.players[Game.myPlayerId].abilities_info[3].waiting/50;
 
         Game.Bar.bomb = new createjs.Shape(countBar).setTransform(815, 70, bomb_width, 1);
         Game.Bar.regenerate = new createjs.Shape(countBar).setTransform(815, 140, regenerate_width, 1);
